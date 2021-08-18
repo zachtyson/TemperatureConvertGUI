@@ -22,7 +22,6 @@ public class TemperatureConverter extends JFrame implements ActionListener {
     int optionOne = 1;
     int optionTwo = 3;
 
-    double newTemp;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -38,7 +37,7 @@ public class TemperatureConverter extends JFrame implements ActionListener {
                 double userTemp = Double.parseDouble(textAreaText);
                 textArea.setText(textArea.getText() + " Degrees ");
                 newTextArea.setText(convertTemp(optionOne, optionTwo, userTemp) + " Degrees");
-            } catch (Exception a) {
+            } catch (NumberFormatException a) {
                 newTextArea.setText("Please type a valid number");
             }
         }
@@ -112,24 +111,29 @@ public class TemperatureConverter extends JFrame implements ActionListener {
         return -1;
     }
     public String convertTemp(int startUnit, int endUnit, double temperature) {
-        if(startUnit == 2 && endUnit == 1){
-            temperature = temperature - 273.15;
+        switch(startUnit + "_" + endUnit) {
+            case "2_1":
+                temperature = temperature - 273.15; //Kelvin to Celsius
+                break;
+            case "2_3":
+                temperature = ((temperature -273.15)*((double)9/5)) + 32.0; //Kelvin to Fahrenheit
+                break;
+            case "1_2":
+                temperature = temperature + 273.15; //Celsius to Kelvin
+                break;
+            case "1_3":
+                temperature = ((temperature)*((double)9/5)) + 32.0; //Celsius to Fahrenheit
+                break;
+            case "3_2":
+                temperature = (temperature-32.0)*((double)5/9) + 273.15; //Fahrenheit to Kelvin
+                break;
+            case "3_1":
+                temperature = (temperature-32.0)*((double)5/9); //Fahrenheit to Celsius
+                break;
+            default:
+                return String.valueOf(temperature);
         }
-        if(startUnit == 2 && endUnit == 3) {
-            temperature = ((temperature -273.15)*((double)9/5)) + 32.0;
-        }
-        if(startUnit == 1 && endUnit == 2) {
-            temperature = temperature + 273.15;
-        }
-        if(startUnit == 1 && endUnit == 3) {
-            temperature = ((temperature)*((double)9/5)) + 32.0;
-        }
-        if(startUnit == 3 && endUnit == 2) {
-            temperature = (temperature-32.0)*((double)5/9) + 273.15;
-        }
-        if(startUnit == 3 && endUnit == 1) {
-            temperature = (temperature-32.0)*((double)5/9);
-        }
+
         return String.valueOf(temperature);
     }
 }
