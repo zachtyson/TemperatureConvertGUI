@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class TemperatureConverter extends JFrame implements ActionListener {
 
@@ -26,15 +27,16 @@ public class TemperatureConverter extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == tempUnits) {
-            optionOne = getOption((String) tempUnits.getSelectedItem());
+            optionOne = getOption((String) Objects.requireNonNull(tempUnits.getSelectedItem()));
         }
         if(e.getSource() == newTempUnits) {
-            optionTwo = getOption((String) newTempUnits.getSelectedItem());
+            optionTwo = getOption((String) Objects.requireNonNull(newTempUnits.getSelectedItem()));
         }
         if(e.getSource() == Convert) {
             String textAreaText = textArea.getText();
             try{
                 double userTemp = Double.parseDouble(textAreaText);
+                textArea.setText(textArea.getText() + " Degrees ");
                 newTextArea.setText(convertTemp(optionOne, optionTwo, userTemp) + " Degrees");
             } catch (Exception a) {
                 newTextArea.setText("Please type a valid number");
