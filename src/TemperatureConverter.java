@@ -35,7 +35,6 @@ public class TemperatureConverter extends JFrame implements ActionListener {
             String textAreaText = textArea.getText();
             try{
                 double userTemp = Double.parseDouble(textAreaText);
-                textArea.setText(textArea.getText() + " Degrees ");
                 newTextArea.setText(convertTemp(optionOne, optionTwo, userTemp) + " Degrees");
             } catch (NumberFormatException a) {
                 newTextArea.setText("Please type a valid number");
@@ -47,7 +46,7 @@ public class TemperatureConverter extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setTitle("Temperature Converter");
         this.setSize(d+200,d);
-        this.setLayout(new FlowLayout());
+        this.setLayout(new GridLayout(3,3,3,3));
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
@@ -71,7 +70,7 @@ public class TemperatureConverter extends JFrame implements ActionListener {
         tempUnits.addActionListener(this);
         this.add(tempUnits);
 
-        endUnit = new JLabel("Ending Temperature and Unit");
+        endUnit = new JLabel("Ending Temperature and Unit ");
         this.add(endUnit);
 
         newTextArea = new JTextArea();
@@ -94,6 +93,8 @@ public class TemperatureConverter extends JFrame implements ActionListener {
         Convert = new JButton("Convert!");
         Convert.addActionListener(this);
         Convert.setPreferredSize(new Dimension(200,50));
+        JLabel emptyFrame = new JLabel();
+        this.add(emptyFrame);
         this.add(Convert);
 
         this.setVisible(true);
